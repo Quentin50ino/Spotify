@@ -5,68 +5,81 @@ import TopTracksComponent from '../components/TopTracksComponent';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router';
 
 function MainPage() {
-    // Authorization token that must have been created previously. See : https://developer.spotify.com/documentation/web-api/concepts/authorization
-const token = 'BQAmClLjDnNycgbAyh1j3F84Gm9PUYQQ_9iIy27sVghQ8mnufz8esVqwCq-KkWwjSSs_GIFocv9vAxeMrh_E0CiRQIjNZY7NXosuQs8ekL76P_bMifafyLpC2KJ8XNqMsDtGHRG7_tFtH09wugzuqetCh_5HXUIBtl7q-WJ2dLJ23OMLo6AzAN05gSh2cJGJnJODhYfYvY60a1u1d293QxezDUg9q0IrSZehOLOiP7GPSGvw1ZtjXD6x7BnCNjQc6XFiCnX7tX3rYA';
-let [playlistId, setPlaylistId] = useState('');
-let [modalShow, setModalShow] = useState(false);
-let [playlistName, setPlaylistName] = useState('');
-let [playlistDescription, setPlaylistDescription] = useState('');
-
-function handlePlaylistName(event){
+  const token = localStorage.getItem("accessToken")
+  let [playlistId, setPlaylistId] = useState('');
+  let [modalShow, setModalShow] = useState(false);
+  let [playlistName, setPlaylistName] = useState('');
+  let [playlistDescription, setPlaylistDescription] = useState('');
+  const navigate = useNavigate();
+  
+  function handlePlaylistName(event){
     setPlaylistName(event.target.value);
-}
-
-function handlePlaylistDescription(event){
+  }
+  
+  function handlePlaylistDescription(event){
     setPlaylistDescription(event.target.value);
-}
+  }
+  
+  async function fetchWebApi(endpoint, method, body) {
+    const res = await fetch(`https://api.spotify.com/${endpoint}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      method,
+      body:JSON.stringify(body)
+    });
+    return await res.json();
+  }
 
-async function fetchWebApi(endpoint, method, body) {
-  const res = await fetch(`https://api.spotify.com/${endpoint}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    method,
-    body:JSON.stringify(body)
-  });
-  return await res.json();
-}
-
-
-
-
-async function createPlaylist(){
+  async function createPlaylist(){
     let tracksUri = [];
-  const { id: user_id } = await fetchWebApi('v1/me', 'GET')
-
-  const playlist = await fetchWebApi(
-    `v1/users/${user_id}/playlists`, 'POST', {
+    const { id: user_id } = await fetchWebApi('v1/me', 'GET')
+    const playlist = await fetchWebApi(
+      `v1/users/${user_id}/playlists`, 'POST', {
       "name": playlistName,
       "description": playlistDescription,
       "public": false
-  })
+    })
+    JSON.parse(localStorage.getItem('topTracks')).map((track) => {
+      tracksUri.push('spotify:track:' + track.id);
+    })
+    JSON.parse(localStorage.getItem('recommendedTracks')).map((track) => {
+      tracksUri.push('spotify:track:' + track.id);
+    })
+    await fetchWebApi(
+      `v1/playlists/${playlist.id}/tracks?uris=${tracksUri.join(',')}`,
+      'POST'
+      );
+    
+    setPlaylistId(playlist.id);
+    setModalShow(false);
+    return playlist;
+  }
 
-  JSON.parse(localStorage.getItem('topTracks')).map((track) => {
-    tracksUri.push('spotify:track:' + track.id);
-})
-JSON.parse(localStorage.getItem('recommendedTracks')).map((track) => {
-    tracksUri.push('spotify:track:' + track.id);
-})
-  await fetchWebApi(
-    `v1/playlists/${playlist.id}/tracks?uris=${tracksUri.join(',')}`,
-    'POST'
-  );
+  const logout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('topTracks');
+    localStorage.removeItem('recommendedTracks');
+    navigate('/');
+    window.location.reload();
+  }
 
-  setPlaylistId(playlist.id);
-  setModalShow(false);
-  return playlist;
-}
-
-function MyVerticallyCenteredModal(props) {
-    return (
-      <Modal
-        {...props}
+  return (
+    <div className="App">
+      <div style={{display : 'flex' , justifyContent : 'flex-end', paddingRight : '40px', cursor : 'pointer'}} onClick={() => logout()}>
+        <img width="30" height="30" src="https://img.icons8.com/ios/100/000000/exit--v1.png" alt="exit--v1"/>
+      </div>
+      <div><img width="200" height="200" src="https://img.icons8.com/cute-clipart/512/spotify.png" alt="spotify"/></div>
+        <TopTracksComponent/>
+        <RecommendTracksComponent/>
+        <div>
+            <Button variant="success" onClick={() => setModalShow(true)} style={{margin : '50px 0px'}}>Create Playlist</Button>
+            <Modal
+      show={modalShow} 
+      onHide={() => setModalShow(false)}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -80,11 +93,11 @@ function MyVerticallyCenteredModal(props) {
           <Form>
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
         <Form.Label>Playlist Name</Form.Label>
-        <Form.Control type="text" placeholder="Name" onChange={() => handlePlaylistName()}/>
+        <Form.Control type="text" placeholder="Name" onChange={(event) => handlePlaylistName(event)}/>
       </Form.Group>
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
         <Form.Label>Playlist Description</Form.Label>
-        <Form.Control type="text" placeholder="Description" onChange={() => handlePlaylistDescription()}/>
+        <Form.Control type="text" placeholder="Description" onChange={(event) => handlePlaylistDescription(event)}/>
       </Form.Group>
     </Form>
         </Modal.Body>
@@ -92,28 +105,8 @@ function MyVerticallyCenteredModal(props) {
           <Button onClick={() => createPlaylist()} disabled={playlistName === '' || playlistDescription === ''}>Create</Button>
         </Modal.Footer>
       </Modal>
-    );
-}
-
-  return (
-    <div className="App">
-        <TopTracksComponent/>
-        <RecommendTracksComponent/>
-        <div>
-            <Button variant="primary" onClick={() => setModalShow(true)}>Create Playlist</Button>
-            <MyVerticallyCenteredModal show={modalShow} onHide={() => setModalShow(false)}/>
         </div>
-        
-
-{playlistId?<iframe
-  title="Spotify Embed: Recommendation Playlist "
-  src={`https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator&theme=0`}
-  width="100%"
-  height="500px"
-  frameBorder="0"
-  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-  loading="lazy"
-/>:null}
+        {playlistId?<iframe title="Spotify Embed: Recommendation Playlist " src={`https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator&theme=0`} width="80%" height="740px" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" id="playlist"/>:null}
     </div>
   );
 }
