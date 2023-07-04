@@ -8,7 +8,7 @@ import Login from './pages/Login';
 
 const CLIENT_ID = "254a994ee5344359b5bc8afcf3dc603c"; // insert your client id here from spotify
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
-const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/"//"https://spotify-create-playlist.web.app"
+const REDIRECT_URL_AFTER_LOGIN = "https://spotify-create-playlist.web.app";
 const SPACE_DELIMITER = "%20";
 const SCOPES = [
   "user-read-currently-playing",
