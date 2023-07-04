@@ -26,7 +26,7 @@ function TopTracksComponent() {
   return (
     <div className="App">
       <h1>Your Top Tracks</h1>
-      <p>Get your top 5 tracks from the last 30 days</p>
+      <p style={{marginBottom : '30px'}}>Get your top 5 tracks from the last 30 days</p>
       {!isLoading?<div>
         {topTracks.map(({id}) =>  
             <div><iframe title="Top 5 tracks" src={`https://open.spotify.com/embed/track/${id}?utm_source=generator`} width="80%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>

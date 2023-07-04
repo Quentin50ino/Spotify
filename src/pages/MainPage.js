@@ -55,7 +55,8 @@ function MainPage() {
       `v1/playlists/${playlist.id}/tracks?uris=${tracksUri.join(',')}`,
       'POST'
       );
-    
+    setPlaylistName('')
+    setPlaylistDescription('')
     setPlaylistId(playlist.id);
     setModalShow(false);
     return playlist;
@@ -71,14 +72,14 @@ function MainPage() {
 
   return (
     <div className="App">
-      <div style={{display : 'flex' , justifyContent : 'flex-end', paddingRight : '40px', cursor : 'pointer'}} onClick={() => logout()}>
-        <img width="30" height="30" src="https://img.icons8.com/ios/100/000000/exit--v1.png" alt="exit--v1"/>
+      <div style={{display : 'flex' , justifyContent : 'flex-end', paddingRight : '80px', cursor : 'pointer'}} onClick={() => logout()}>
+      <img width="50" height="50" src="https://img.icons8.com/external-tal-revivo-green-tal-revivo/72/external-web-secure-session-sign-out-internet-logoff-login-green-tal-revivo.png" alt="external-web-secure-session-sign-out-internet-logoff-login-green-tal-revivo"/>
       </div>
       <div><img width="200" height="200" src="https://img.icons8.com/cute-clipart/512/spotify.png" alt="spotify"/></div>
         <TopTracksComponent/>
         <RecommendTracksComponent/>
         <div>
-          <Button variant="success" onClick={() => setModalShow(true)} style={{margin : '50px 0px', fontSize : '20px'}}>Create Playlist</Button>
+          <Button variant="success" onClick={() => setModalShow(true)} style={{margin : '50px 0px', fontSize : '20px', padding : '20px 30px', borderRadius : '40px'}}> Create Playlist</Button>
           <Modal show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">Create Playlist</Modal.Title>
@@ -96,11 +97,11 @@ function MainPage() {
                 </Form>
               </Modal.Body>
               <Modal.Footer>
-                <Button variant='success' onClick={() => createPlaylist()} disabled={playlistName === '' || playlistDescription === ''}>Create</Button>
+                <Button style={{fontSize : '20px', padding : '10px 30px', borderRadius : '40px'}} variant='success' onClick={() => createPlaylist()} disabled={playlistName === '' || playlistDescription === ''}>Create</Button>
               </Modal.Footer>
           </Modal>
         </div>
-        {playlistId?<iframe title="Spotify Embed: Recommendation Playlist " src={`https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator&theme=0`} width="80%" height="740px" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" id="playlist"/>:null}
+        {playlistId?<iframe style={{marginBottom : '50px'}} title="Spotify Embed: Recommendation Playlist " src={`https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator&theme=0`} width="80%" height="740px" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" id="playlist"/>:null}
     </div>
   );
 }

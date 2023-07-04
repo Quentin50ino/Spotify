@@ -54,7 +54,7 @@ function RecommendTracksComponent() {
       <div className="App">
       <h1>Recommended Tracks</h1>
       <p>Recommend 5 songs based on your top 5 tracks</p>
-      <div style={{cursor : 'pointer', marginBottom : '30px'}} onClick={() => fetchData()}><img width="50" height="50" src="https://img.icons8.com/material-rounded/96/000000/refresh.png" alt="refresh"/></div>
+      <div style={{cursor : 'pointer', marginBottom : '30px'}} onClick={() => fetchData()}><img width="50" height="50" src="https://img.icons8.com/color-glass/96/available-updates.png" alt="available-updates"/></div>
       {!isLoading?<div>
         {recommendTracks.map(({id}) =>  
             <div><iframe title="Recommended tracks" src={`https://open.spotify.com/embed/track/${id}?utm_source=generator`} width="80%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
