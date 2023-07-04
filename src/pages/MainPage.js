@@ -79,7 +79,7 @@ function MainPage() {
         <TopTracksComponent/>
         <RecommendTracksComponent/>
         <div>
-          <Button variant="success" onClick={() => setModalShow(true)} style={{margin : '50px 0px', fontSize : '20px', padding : '20px 30px', borderRadius : '40px'}}> Create Playlist</Button>
+          <Button variant="success" onClick={() => setModalShow(true)} style={{margin : '50px 0px', fontSize : '20px', padding : '20px 30px', borderRadius : '40px', backgroundColor : '#1DB954'}}> Create Playlist</Button>
           <Modal show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">Create Playlist</Modal.Title>
@@ -97,7 +97,7 @@ function MainPage() {
                 </Form>
               </Modal.Body>
               <Modal.Footer>
-                <Button style={{fontSize : '20px', padding : '10px 30px', borderRadius : '40px'}} variant='success' onClick={() => createPlaylist()} disabled={playlistName === '' || playlistDescription === ''}>Create</Button>
+                <Button style={{fontSize : '20px', padding : '10px 30px', borderRadius : '40px', backgroundColor : '#1DB954'}} variant='success' onClick={() => createPlaylist()} disabled={playlistName === '' || playlistDescription === ''}>Create</Button>
               </Modal.Footer>
           </Modal>
         </div>

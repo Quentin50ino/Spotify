@@ -31,7 +31,7 @@ function TopTracksComponent() {
         {topTracks.map(({id}) =>  
             <div><iframe title="Top 5 tracks" src={`https://open.spotify.com/embed/track/${id}?utm_source=generator`} width="80%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
         )}
-      </div>:<div><Spinner animation="border" variant="success" /></div>}
+      </div>:<div><Spinner animation="border" style={{color : '#1DB954'}} /></div>}
     </div>
   );
 }
