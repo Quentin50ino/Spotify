@@ -8,8 +8,9 @@ import Login from './pages/Login';
 
 const CLIENT_ID = "254a994ee5344359b5bc8afcf3dc603c"; // insert your client id here from spotify
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
-const REDIRECT_URL_AFTER_LOGIN = "https://spotify-create-playlist.web.app";
+const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/"//"https://spotify-create-playlist.web.app";
 const SPACE_DELIMITER = "%20";
+const topTracksIds = ['0nVpE03Iv9uioPSomEN5v0','1qFyt3Dh235Lay6tYzXH1C','5g9lS8deSIxItFBmZRC4vN','2plRom0urixt6BE8t7kOhQ','3uqinR4FCjLv28bkrTdNX5'];
 const SCOPES = [
   "user-read-currently-playing",
   "user-read-playback-state",
@@ -48,17 +49,12 @@ function App() {
         localStorage.setItem('topTracks', JSON.stringify(tracks.items))
       })
 
-      const topTracksIds = [
-        '0nVpE03Iv9uioPSomEN5v0','1qFyt3Dh235Lay6tYzXH1C','5g9lS8deSIxItFBmZRC4vN','2plRom0urixt6BE8t7kOhQ','3uqinR4FCjLv28bkrTdNX5'
-      ];
-      /*JSON.parse(localStorage.getItem('topTracks')).map((track) => {
-        topTracksIds.push(track.id);
-      })*/
       spotify.getRecommendations({limit : 5, seed_tracks : topTracksIds}).then((tracks) => {
         console.log("RECOMMENDATION: ", tracks);
         localStorage.setItem('recommendedTracks', JSON.stringify(tracks.tracks));
       })
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleLogin = () => {
@@ -68,10 +64,10 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <Routes>
-      <Route path="/" element={!localStorage.getItem('accessToken') ? <Login handleLogin={handleLogin}/> : <LoginSuccess />}></Route>
-      <Route path="/mainPage" element={<MainPage />}></Route>
-      </Routes>
+        <Routes>
+          <Route path="/" element={!localStorage.getItem('accessToken') ? <Login handleLogin={handleLogin}/> : <LoginSuccess />}></Route>
+          <Route path="/mainPage" element={<MainPage />}></Route>
+        </Routes>
       </BrowserRouter>
     </div>
   );
