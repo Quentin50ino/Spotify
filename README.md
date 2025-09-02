@@ -1,70 +1,37 @@
-# Getting Started with Create React App
+# Spotify Playlist Generator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+Spotify Playlist Generator is a web application that allows users to log in with their Spotify account, view their top tracks and saved tracks, and easily create custom playlists. The app uses the official Spotify Web API to fetch your personal music data and helps you generate playlists based on your listening habits.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **Spotify Login:** Authenticate securely with your Spotify account.
+- **Top Tracks:** View your most listened-to tracks.
+- **Saved Tracks:** Access your favorite saved songs.
+- **Playlist Creation:** Generate and save new playlists directly to your Spotify account.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Access Requirements
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Due to Spotify's developer restrictions, user management must be handled manually.  
+If you are unable to access the app after authentication, please request access by sending an email to:
 
-### `npm test`
+**alberto.bollino@outlook.it**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Your Spotify account will be added manually to the app's user list in the Spotify Developer Dashboard.
 
-### `npm run build`
+## How It Works
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Click "Login with Spotify" to authenticate.
+2. After logging in, you will be redirected to the app's main page.
+3. Explore your top tracks and saved tracks.
+4. Create new playlists with your favorite songs.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Note
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Only users who have been manually added to the app's user list can access the app.
+- If you encounter an "access denied" or similar error, contact the email above for support.
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Enjoy creating your personalized Spotify playlists!
