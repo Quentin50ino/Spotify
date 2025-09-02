@@ -11,14 +11,15 @@ const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
 //const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/"; //dev env
 const REDIRECT_URL_AFTER_LOGIN = "https://spotify-create-playlist.web.app"; //prod env
 const SPACE_DELIMITER = "%20";
-const topTracksIds = ['0nVpE03Iv9uioPSomEN5v0','1qFyt3Dh235Lay6tYzXH1C','5g9lS8deSIxItFBmZRC4vN','2plRom0urixt6BE8t7kOhQ','3uqinR4FCjLv28bkrTdNX5'];
+const topTracksIds = ['1qBXtw3nOOhGQukj0nkqsa','6oSm3mBWFxJHEnjE2IqhmA','4ol2UyMTiklHVujAWg02nE','21nLiBWSxGeN4ItrogfmPB','11Xb4g57kDYwbjKVljcyTN'];
 const SCOPES = [
   "user-read-currently-playing",
   "user-read-playback-state",
   "playlist-read-private",
   "user-top-read",
   "playlist-modify-private",
-  "playlist-modify-public"
+  "playlist-modify-public",
+  "user-library-read"
 ];
 const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
 
@@ -46,14 +47,12 @@ function App() {
       localStorage.setItem('accessToken', spotify.getAccessToken());
       
       spotify.getMyTopTracks({limit : 5, time_range : 'short_term'}).then((tracks) => {
-        console.log("TOP TRACKS: ", tracks.items)
         localStorage.setItem('topTracks', JSON.stringify(tracks.items))
       })
 
-      spotify.getRecommendations({limit : 5, seed_tracks : topTracksIds}).then((tracks) => {
-        console.log("RECOMMENDATION: ", tracks);
-        localStorage.setItem('recommendedTracks', JSON.stringify(tracks.tracks));
-      })
+      spotify.getMySavedTracks({ limit: 5 }).then((tracks) => {
+        localStorage.setItem('topSavedTracks', JSON.stringify(tracks.items));
+      });
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

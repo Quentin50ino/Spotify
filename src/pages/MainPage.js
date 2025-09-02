@@ -48,9 +48,11 @@ function MainPage() {
       tracksUri.push('spotify:track:' + track.id);
     })
     // eslint-disable-next-line array-callback-return
-    JSON.parse(localStorage.getItem('recommendedTracks')).map((track) => {
-      tracksUri.push('spotify:track:' + track.id);
+    JSON.parse(localStorage.getItem('topSavedTracks')).map((track) => {
+      tracksUri.push('spotify:track:' + track.track.id);
     })
+    console.log("TRACKS URI: ", tracksUri);
+    console.log("Tracks URI JOIN: ", tracksUri.join(','));
     await fetchWebApi(
       `v1/playlists/${playlist.id}/tracks?uris=${tracksUri.join(',')}`,
       'POST'
@@ -65,7 +67,7 @@ function MainPage() {
   const logout = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('topTracks');
-    localStorage.removeItem('recommendedTracks');
+    localStorage.removeItem('topSavedTracks');
     navigate('/');
     window.location.reload();
   }
